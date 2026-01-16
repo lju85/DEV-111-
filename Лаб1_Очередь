@@ -1,0 +1,26 @@
+from typing import Any
+
+class Queue:
+    def __init__(self):
+        self.queue = []
+
+    def enqueue(self, elem: Any) -> None:
+        self.queue.append(elem)
+
+    def dequeue(self) -> Any:
+        if not self.queue:
+            raise IndexError("Очередь пуста")
+        return self.queue.pop(0)
+
+    def peek(self, ind: int = 0) -> Any:
+        if not isinstance(ind, int):
+            raise TypeError("Индекс должен быть целым числом")
+        if ind < 0 or ind >= len(self.queue):
+            raise IndexError("Индекс вне границ очереди")
+        return self.queue[ind]
+
+    def clear(self) -> None:
+        self.queue.clear() 
+
+    def __len__(self):
+        return len(self.queue)
