@@ -1,0 +1,36 @@
+from typing import List
+def car_paths(n: int, m: int) -> List[List[int]]:
+
+    if not isinstance(n, int) or not isinstance(m, int):
+        raise TypeError
+    if n < 0 or m < 0:
+        raise ValueError
+    if n == 0 or m == 0:
+        return []
+
+    # Таблица n x m, заполненная нулями
+    dp = [[0] * m for _ in range(n)]
+    # Начальная позиция
+    dp[0][0] = 1
+
+    for i in range(n):
+        for j in range(m):
+            # Начальная клетка уже обработана
+            if i == 0 and j == 0:
+                continue
+            ways = 0
+            # Движение вниз: столбец - это const, строка меняется
+            if i > 0:
+                ways += dp[i - 1][j]
+            # Движение вправо: строка - это const, столбец меняется
+            if j > 0:
+                ways += dp[i][j - 1]
+            # Движение по диагонали (вправо-вниз): меняются строка и столбец
+            if i > 0 and j > 0:
+                ways += dp[i - 1][j - 1]
+            dp[i][j] = ways
+    return dp
+
+if __name__ == '__main__':
+    paths = car_paths(5, 3)
+    print(paths)
